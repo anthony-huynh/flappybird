@@ -22,5 +22,5 @@ Functions:
 - check for collisions with bird and pipes and with bird and ground
 
 ##TO DO:
-- Catch error (use online error catcher)
+- ~~Catch error (use online error catcher)~~
 - Use space bar to move up
