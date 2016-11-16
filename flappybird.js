@@ -1,170 +1,114 @@
-function random(min, max){
-    return Math.floor(Math.random() * max) + min;
-    
-}
+/* Flappy Bird
+ * Group members: 
+ *
+ *
+ */
+ 
+ 
+// Get canvas and context from DOM
+var canvas = document.getElementById("flappybirdcanvas");
+var ctx = canvas.getContext("2d");
+
+// Declare constants
+var INIT_X = canvas.width / 3;
+var INIT_Y = canvas.height / 2;
+
+// Declare variables
+var ctx;        // the canvas object
+var bird;       // the bird object
+var pipes;      // array to hold pipe objects
+var interval; // stores interval
+var kbdUp;      // boolean to hold keyboard input
+
+// Load images
+//var fImg = new Image();
+//fImg.src = "flap.png";
 
 
-function startGame() {
-    myGameArea.start();
-}
-var ctx;
-
-
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        ctx = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    }
-}
-    
-    
-var myGamePiece;
-
-var intervalId;
-function startGame() {
-    myGameArea.start();
-    myGamePiece = new component(30, 30, "blue", 10, 120);
-    myGamePiece2 = new component(70, 70, "green", 50, 80);
-    console.log(myGamePiece)
-    intervalId = window.setInterval(draw, 50)
-
-}
-
-
-function drawcomponent(component) {
-
-    ctx.fillStyle = component.color;
-    ctx.fillRect(component.x, component.y, component.width, component.height);
-    //ctx.drawImage();
-}
-
-function component(width, height, color, x, y) {
+// Class to represent a bird
+function Bird(width, height, color, x, y) {
     this.width = width;
     this.height = height;
     this.color = color;
     this.x = x;
     this.y = y; 
     this.velocity = 10;
+    
+    // Update the bird y position
+    this.move = function () {
+        this.y += this.velocity;
+    };
 }
 
+// Class to represent a pipe
+function Pipe(width, height, color, x, y) {
+    this.width = width;
+    this.height = height;
+    this.color = color;
+    this.x = x;
+    this.y = y; 
+    this.velocity = -10;
+    
+    // Update the pipe x position
+    this.move = function () {
+        this.x += this.velocity;
+    };
+}
+
+// Returns a random integer between min and max
+function random(min, max) {
+    return Math.floor(Math.random() * max) + min;
+}
+
+// Re-initializes variables and starts the game
+function startGame() {
+    bird = new Bird(40, 40, "blue", INIT_X, INIT_Y);
+    
+    // todo: refactor pipe into an array!
+    pipe = new Pipe(40, canvas.height, "green", canvas.width - 140, 50);
+    
+    // Send the draw function to be called by setInterval every 50 milliseconds
+    interval = setInterval(draw, 50);
+}
+
+// Draws something on screen
+function drawcomponent(component) {
+    ctx.beginPath();
+    ctx.fillStyle = component.color;
+    ctx.fillRect(component.x, component.y, component.width, component.height);
+    ctx.closePath();
+    
+    //ctx.drawImage();
+}
+
+// Detect collisions
+function collisionDetection() {
+    
+    // Did our bird hit the bottom of the screen?
+    if (bird.y + bird.height === canvas.height){
+        
+        // Start a new game
+        clearInterval(interval);
+        startGame();
+    }
+}
+
+// Call each frame to re-draw the screen
 function draw() {
-    ctx.clearRect(0,0,480, 270);
-     drawcomponent(myGamePiece);
-     drawcomponent(myGamePiece2);
-     console.log(myGamePiece.y);
-     myGamePiece.y += myGamePiece.velocity; 
-     myGamePiece2.x -= myGamePiece2.velocity; 
-     
-    if(myGamePiece.y + myGamePiece.height === 270){
-        window.clearInterval(intervalId);
-    }
-       
-}
-/*
-
     
-//   document.onkeypress = function(e) {
-//        e = e || window.event;
-//        var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-//        if (String.fromCharCode(charCode) === " ") {
-//            console.log("cool")
-//        }
-//   }; 
-   
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    // Check for collisions
+    collisionDetection();
     
+    // Move stuff
+    bird.move();
+    pipe.move();
     
-    
-    
-
-
-
-
- //classes
-var Building = function(X,Y,Width,Height,GREEN){
-    this.x = X; 
-    this.y = Y;
-    this.w = Width;
-    this.h = -Height;
-    this.green = GREEN;
-};
-
-// layer class
-var Layer = function(speed,GREEN,Y){
-    this.speed = speed;
-    this.buildingList =[];
-    this.green = GREEN;
-    this.y = Y;
-    var Xposition = -20;
-    for(var i=0; i < 15; i++){
-        var building = new Building(Xposition,this.y,50,random(50,200),this.green);
-        this.buildingList.push(building);
-        Xposition = Xposition + 50;
-    }
-};
-
-//function that make the building show up
-Building.prototype.appear = function(){
-    console.log(this.green)
-    fill(this.green);
-    rect(this.x,this.y, this.w,this.h);
-};
-
-//function makes building move at given speed parameter
-//by increasing the x position by speed amount
-Building.prototype.move = function(speed){
-    this.x = this.x + speed;
-    if (this.x > 400){
-        this.x = -60;
-    }
-};
-
-//function that make the layer show up
-Layer.prototype.appear = function(){
-    fill(this.green);
-    rect(this.x,this.y,this.w,this.h);
-    for(var i = 0; i < this.buildingList.length; i++) {
-        this.buildingList[i].appear();
-    }
-};
-
-Layer.prototype.move = function(speed){
-    for(var i = 0; i < this.buildingList.length; i++) {
-        this.buildingList[i].move(speed);
-    }
-};
-
-var LayerList=[];
-var Layer1 = new Layer(5, 255,0,10,300);
-LayerList.push(Layer1);
-for(var i = 0; i<5; i++){
-    var Layer1 = new Layer(Layer1.speed - 2,random(0,255),random(0,255),random(0,255),Layer1.y + 20);
-    LayerList.push(Layer1);
+    // Draw everything
+    drawcomponent(bird);
+    drawcomponent(pipe);
 }
 
-//var draw = function() {
-//    background(48, 48, 107);
-//    noStroke();
-//    var SPEED = 5;
-//    for(var i = 0; i < LayerList.length; i++){
-//        LayerList[i].appear();
-//        LayerList[i].move(SPEED);
-//        SPEED = SPEED - 0.8;
-//    }
-//};
 
-//    var building1 = new Building(100, 100, 20, 50, "green")
-//    console.log(building1)
-////    building1.appear()
-//    draw()
-
-
-
-
-
-
-
-/*
