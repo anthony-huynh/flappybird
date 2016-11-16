@@ -16,5 +16,5 @@ Jump
 
 
 ##TO DO:
--Catch error (use online error catcher)
--Use space bar to move up
+- Catch error (use online error catcher)
+- Use space bar to move up
