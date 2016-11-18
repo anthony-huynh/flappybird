@@ -23,4 +23,4 @@ Functions:
 
 ##TO DO:
 - ~~Catch error (use online error catcher)~~
-- Use space bar to move up
+- ~~Use space bar to move up~~
