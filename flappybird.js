@@ -14,7 +14,6 @@ var INIT_X = canvas.width / 3;
 var INIT_Y = canvas.height / 2;
 
 // Declare variables
-var ctx;        // the canvas object
 var bird;       // the bird object
 var pipes;      // array to hold pipe objects
 var interval; // stores interval
