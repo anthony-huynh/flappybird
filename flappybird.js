@@ -12,13 +12,14 @@ var ctx = canvas.getContext("2d");
 // Declare constants
 var INIT_X = canvas.width / 3;
 var INIT_Y = canvas.height / 2;
+var GRAVITY = 4;
 
 // Declare variables
 var bird;       // the bird object
 var pipes;      // array to hold pipe objects
 var interval; // stores interval
 var kbdUp;      // boolean to hold keyboard input
-
+ 
 // Load images
 //var fImg = new Image();
 //fImg.src = "flap.png";
@@ -31,12 +32,17 @@ function Bird(width, height, color, x, y) {
     this.color = color;
     this.x = x;
     this.y = y; 
-    this.velocity = 10;
+    this.velocity = 0;
+    this.move = function () {
+        this.velocity += GRAVITY;
+        this.y += this.velocity;
+        if (this.y >= canvas.height - this.height){
+            this.y = canvas.height - this.height
+        }
+    };
     
     // Update the bird y position
-    this.move = function () {
-        this.y += this.velocity;
-    };
+    
 }
 
 // Class to represent a pipe
@@ -68,6 +74,15 @@ function startGame() {
     
     // Send the draw function to be called by setInterval every 50 milliseconds
     interval = setInterval(draw, 50);
+    
+    document.addEventListener("keydown", function(event){
+        
+       
+        if (event.keyCode === 32){
+            console.log(event.keyCode);
+            bird.velocity = -20;
+        }
+    });
 }
 
 // Draws something on screen
@@ -87,8 +102,8 @@ function collisionDetection() {
     if (bird.y + bird.height === canvas.height){
         
         // Start a new game
-        clearInterval(interval);
-        startGame();
+        
+        //startGame();
     }
 }
 
@@ -107,7 +122,6 @@ function draw() {
     
     // Draw everything
     drawcomponent(bird);
-    drawcomponent(pipe);
+    //drawcomponent(pipe);
 }
-
 
