@@ -10,15 +10,28 @@ var canvas = document.getElementById("flappybirdcanvas");
 var ctx = canvas.getContext("2d");
 
 // Declare constants
-var INIT_X = canvas.width / 3;
-var INIT_Y = canvas.height / 2;
+var BIRD_INIT_X = canvas.width / 10;
+var BIRD_INIT_Y = canvas.height / 2;
 var GRAVITY = 4;
+var PIPE_INIT_X = canvas.width
+
 
 // Declare variables
 var bird;       // the bird object
-var pipes;      // array to hold pipe objects
+var pipes = [];      // array to hold pipe objects
 var interval; // stores interval
 var kbdUp;      // boolean to hold keyboard input
+
+
+
+// Generates a random integer between two bounds
+function rand(lo, hi) {
+    return Math.floor(Math.random() * (hi - lo)) + lo;
+}
+
+
+
+
  
 // Load images
 //var fImg = new Image();
@@ -57,17 +70,16 @@ function Pipe(width, height, color, x, y) {
     // Update the pipe x position
     this.move = function () {
         this.x += this.velocity;
+        if (this.x + this.width <= 0){
+            this.x = PIPE_INIT_X;
+        }
     };
 }
 
-// Returns a random integer between min and max
-function random(min, max) {
-    return Math.floor(Math.random() * max) + min;
-}
 
 // Re-initializes variables and starts the game
 function startGame() {
-    bird = new Bird(40, 40, "blue", INIT_X, INIT_Y);
+    bird = new Bird(40, 40, "blue", BIRD_INIT_X, BIRD_INIT_Y);
     
     // todo: refactor pipe into an array!
     pipe = new Pipe(40, canvas.height, "green", canvas.width - 140, 50);
@@ -105,6 +117,12 @@ function collisionDetection() {
         
         //startGame();
     }
+    
+    // check top pipe
+    if (bird.x + bird.width >= pipe.x){
+        console.log("coao");
+    }
+        
 }
 
 // Call each frame to re-draw the screen
@@ -116,12 +134,18 @@ function draw() {
     // Check for collisions
     collisionDetection();
     
+//    for (var i = 0; i < bldgs.length ; i++) {
+//        bldgs[i].move();
+//        bldgs[i].draw();
+//    }
+//    
     // Move stuff
     bird.move();
     pipe.move();
     
     // Draw everything
     drawcomponent(bird);
-    //drawcomponent(pipe);
+    drawcomponent(pipe);
 }
+
 
