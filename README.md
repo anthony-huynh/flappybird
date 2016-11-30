@@ -24,8 +24,16 @@ Functions:
 ##TO DO:
 - ~~Catch error (use online error catcher)~~
 - ~~Use space bar to move up~~
-- make pipes
-- collision detect pipes + game over
+
+
+
+\/ \/ \/ \/ \/ \/ \/ \/
+- collision detection
+/\ /\ /\ /\ /\ /\ /\ /\
+
+
+
+- make pipes (array of pipes)
 - put bird drawing in 
 - put pipe drawings in
 - put background
