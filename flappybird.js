@@ -119,7 +119,8 @@ function collisionDetection() {
     }
     
     // check top pipe
-    if (bird.x + bird.width >= pipe.x){
+    if (bird.x + bird.width >= pipe.x && 
+       bird.y ){
         console.log("coao");
     }
         
