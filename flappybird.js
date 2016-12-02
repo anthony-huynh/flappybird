@@ -13,7 +13,10 @@ var ctx = canvas.getContext("2d");
 var BIRD_INIT_X = canvas.width / 10;
 var BIRD_INIT_Y = canvas.height / 2;
 var GRAVITY = 4;
-var PIPE_INIT_X = canvas.width
+var PIPE_INIT_X = canvas.width;
+var HOLE_HEIGHT = 140;
+var NUMBER_OF_PIPES = 2
+var NEW_PIPE_X = canvas.width - canvas.width / NUMBER_OF_PIPES;
 
 
 // Declare variables
@@ -70,16 +73,22 @@ function Pipe(width, height, color, x, y) {
     // Update the pipe x position
     this.move = function () {
         this.x += this.velocity;
-        if (this.x + this.width <= 0){
-            this.x = PIPE_INIT_X;
-        }
-    };
+    }
 }
 
 
 
-function addPipe(pipe){
-	pipes.unshift(pipe);
+function addPipe(){
+	
+	var holeY = rand(50, 550);
+
+	pipes.unshift(new Pipe(40, holeY, "green", canvas.width, 0));
+    pipes.unshift(new Pipe(40, canvas.height, "yellow", canvas.width, holeY + HOLE_HEIGHT));
+
+    if (pipes.length > NUMBER_OF_PIPES * 2 + 2 ){
+    	pipes.pop();
+    	pipes.pop();
+    }
 	
 }
 
@@ -89,8 +98,7 @@ function startGame() {
     bird = new Bird(40, 40, "blue", BIRD_INIT_X, BIRD_INIT_Y);
     
     // todo: refactor pipe into an array!
-    addPipe(new Pipe(40, canvas.height/2, "green", canvas.width - 140, 0));
-    addPipe(new Pipe(40, canvas.height, "yellow", canvas.width - 140, canvas.height/2 + 140));
+    addPipe();
 
     
     // Send the draw function to be called by setInterval every 50 milliseconds
@@ -147,12 +155,26 @@ function collisionDetection() {
 		}
 }
 
+
+function addIfPipeNeeded(){
+	var pipe = pipes[pipes.length - 1];
+
+	console.log(pipe);
+
+	if (pipe.x === NEW_PIPE_X){
+		addPipe();
+	}
+}
+
+
 // Call each frame to re-draw the screen
 function draw() {
     
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    addIfPipeNeeded();
+
     // Check for collisions
     collisionDetection();
     
