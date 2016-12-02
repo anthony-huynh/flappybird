@@ -77,12 +77,21 @@ function Pipe(width, height, color, x, y) {
 }
 
 
+
+function addPipe(pipe){
+	pipes.unshift(pipe);
+	
+}
+
+
 // Re-initializes variables and starts the game
 function startGame() {
     bird = new Bird(40, 40, "blue", BIRD_INIT_X, BIRD_INIT_Y);
     
     // todo: refactor pipe into an array!
-    pipe = new Pipe(40, canvas.height/2, "green", canvas.width - 140, 0);
+    addPipe(new Pipe(40, canvas.height/2, "green", canvas.width - 140, 0));
+    addPipe(new Pipe(40, canvas.height, "yellow", canvas.width - 140, canvas.height/2 + 140));
+
     
     // Send the draw function to be called by setInterval every 50 milliseconds
     interval = setInterval(draw, 50);
@@ -117,17 +126,25 @@ function collisionDetection() {
         
         //startGame();
     }
-    
-    // check top pipe
-    if (bird.x + bird.width >= pipe.x && 
-       bird.x <= pipe.x + pipe.width && bird.y + bird.height >= pipe.y && bird.y <= pipe.y + pipe.height){
-        console.log("coao");
-    	bird.color = "red";
-    }
-    else{
-    	bird.color = "blue";
-    }
+
+    var collided = false;
+
+    for (var i = 0; i < pipes.length ; i++) {
+        var pipe = pipes[i];
         
+		// check  pipe
+		if (bird.x + bird.width >= pipe.x && 
+		   bird.x <= pipe.x + pipe.width && bird.y + bird.height >= pipe.y && bird.y <= pipe.y + pipe.height){
+		   collided = true;
+		}
+	}
+        if (collided){
+	        console.log("coao");
+			bird.color = "red";
+		}
+		else{
+			bird.color = "blue"
+		}
 }
 
 // Call each frame to re-draw the screen
@@ -139,17 +156,18 @@ function draw() {
     // Check for collisions
     collisionDetection();
     
-//    for (var i = 0; i < bldgs.length ; i++) {
-//        bldgs[i].move();
-//        bldgs[i].draw();
-//    }
+    for (var i = 0; i < pipes.length ; i++) {
+        var pipe = pipes[i];
+        pipe.move();
+        drawcomponent(pipe);
+    }
 //    
     // Move stuff
     bird.move();
-    pipe.move();
+   
     
     // Draw everything
-    drawcomponent(pipe);
+   
     drawcomponent(bird);
 }
 
