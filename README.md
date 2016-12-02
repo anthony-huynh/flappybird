@@ -24,13 +24,7 @@ Functions:
 ##TO DO:
 - ~~Catch error (use online error catcher)~~
 - ~~Use space bar to move up~~
-
-
-
-\/ \/ \/ \/ \/ \/ \/ \/
-- collision detection
-/\ /\ /\ /\ /\ /\ /\ /\
-
+- ~~collision detection~~
 
 
 - make pipes (array of pipes)
