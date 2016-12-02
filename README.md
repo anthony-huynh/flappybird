@@ -31,3 +31,4 @@ Functions:
 - put bird drawing in 
 - put pipe drawings in
 - put background
+- make death and restart option (?)
