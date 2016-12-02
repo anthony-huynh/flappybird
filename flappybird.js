@@ -82,7 +82,7 @@ function startGame() {
     bird = new Bird(40, 40, "blue", BIRD_INIT_X, BIRD_INIT_Y);
     
     // todo: refactor pipe into an array!
-    pipe = new Pipe(40, canvas.height, "green", canvas.width - 140, 50);
+    pipe = new Pipe(40, canvas.height/2, "green", canvas.width - 140, 0);
     
     // Send the draw function to be called by setInterval every 50 milliseconds
     interval = setInterval(draw, 50);
@@ -120,8 +120,12 @@ function collisionDetection() {
     
     // check top pipe
     if (bird.x + bird.width >= pipe.x && 
-       bird.y ){
+       bird.x <= pipe.x + pipe.width && bird.y + bird.height >= pipe.y && bird.y <= pipe.y + pipe.height){
         console.log("coao");
+    	bird.color = "red";
+    }
+    else{
+    	bird.color = "blue";
     }
         
 }
@@ -145,8 +149,8 @@ function draw() {
     pipe.move();
     
     // Draw everything
-    drawcomponent(bird);
     drawcomponent(pipe);
+    drawcomponent(bird);
 }
 
 
