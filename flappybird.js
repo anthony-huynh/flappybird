@@ -79,7 +79,7 @@ function Pipe(width, height, color, x, y) {
 
 
 function addPipe(){
-	
+
 	var holeY = rand(50, 550);
 
 	pipes.unshift(new Pipe(40, holeY, "green", canvas.width, 0));
@@ -88,7 +88,10 @@ function addPipe(){
     if (pipes.length > NUMBER_OF_PIPES * 2 + 2 ){
     	pipes.pop();
     	pipes.pop();
+
     }
+
+
 	
 }
 
@@ -100,15 +103,18 @@ function startGame() {
     // todo: refactor pipe into an array!
     addPipe();
 
+
     
     // Send the draw function to be called by setInterval every 50 milliseconds
     interval = setInterval(draw, 50);
+    // pipeInterval = setInterval(function() {
+    //     addIfPipeNeeded();
+    // }, 250)
     
     document.addEventListener("keydown", function(event){
         
        
         if (event.keyCode === 32){
-            console.log(event.keyCode);
             bird.velocity = -20;
         }
     });
@@ -147,7 +153,6 @@ function collisionDetection() {
 		}
 	}
         if (collided){
-	        console.log("coao");
 			bird.color = "red";
 		}
 		else{
@@ -155,15 +160,21 @@ function collisionDetection() {
 		}
 }
 
+setInterval(function() {
+    addPipe();    
+}, 1500);
 
 function addIfPipeNeeded(){
 	var pipe = pipes[pipes.length - 1];
 
-	console.log(pipe);
+    console.log(pipe.x);
+    console.log("New Pipe X: ", NEW_PIPE_X);
 
 	if (pipe.x === NEW_PIPE_X){
-		addPipe();
+    
+		// addPipe();
 	}
+
 }
 
 
