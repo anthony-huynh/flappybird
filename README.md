@@ -25,9 +25,9 @@ Functions:
 - ~~Catch error (use online error catcher)~~
 - ~~Use space bar to move up~~
 - ~~collision detection~~
+- ~~make pipes (array of pipes)~~
 
 
-- make pipes (array of pipes)
 - put bird drawing in 
 - put pipe drawings in
 - put background
