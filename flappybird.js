@@ -25,7 +25,15 @@ var pipes = [];      // array to hold pipe objects
 var interval; // stores interval
 var kbdUp;      // boolean to hold keyboard input
 
+var images = [];
+var imageCount = 2;
 
+for(var i=0; i<imageCount; i++){
+    var img = document.createElement("img");
+    img.src="imgs/" + i + ".png";
+    images.push(img);
+    images.push(img);
+}
 
 // Generates a random integer between two bounds
 function rand(lo, hi) {
@@ -49,6 +57,7 @@ function Bird(width, height, color, x, y) {
     this.x = x;
     this.y = y; 
     this.velocity = 0;
+    this.frame = 0;
     this.move = function () {
         this.velocity += GRAVITY;
         this.y += this.velocity;
@@ -56,6 +65,15 @@ function Bird(width, height, color, x, y) {
             this.y = canvas.height - this.height
         }
     };
+    this.draw = function () {
+        var img = images[this.frame];
+        ctx.drawImage(img, this.x, this.y, this.width, this.height);
+        this.frame = this.frame + 1;
+        if (this.frame >= images.length){
+            this.frame = 0;
+        }
+            
+    }
     
     // Update the bird y position
     
@@ -167,8 +185,8 @@ setInterval(function() {
 function addIfPipeNeeded(){
 	var pipe = pipes[pipes.length - 1];
 
-    console.log(pipe.x);
-    console.log("New Pipe X: ", NEW_PIPE_X);
+   // console.log(pipe.x);
+    //console.log("New Pipe X: ", NEW_PIPE_X);
 
 	if (pipe.x === NEW_PIPE_X){
     
@@ -201,7 +219,7 @@ function draw() {
     
     // Draw everything
    
-    drawcomponent(bird);
+    bird.draw();
 }
 
 
