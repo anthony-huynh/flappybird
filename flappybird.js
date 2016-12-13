@@ -101,7 +101,7 @@ function addPipe(){
 	var holeY = rand(50, 550);
 
 	pipes.unshift(new Pipe(40, holeY, "green", canvas.width, 0));
-    pipes.unshift(new Pipe(40, canvas.height, "yellow", canvas.width, holeY + HOLE_HEIGHT));
+    pipes.unshift(new Pipe(40, canvas.height, "green", canvas.width, holeY + HOLE_HEIGHT));
 
     if (pipes.length > NUMBER_OF_PIPES * 2 + 2 ){
     	pipes.pop();
