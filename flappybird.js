@@ -1,8 +1,4 @@
-/* Flappy Bird
- * Group members: 
- *
- *
- */
+
  
  
 // Get canvas and context from DOM
@@ -106,11 +102,7 @@ function addPipe(){
     if (pipes.length > NUMBER_OF_PIPES * 2 + 2 ){
     	pipes.pop();
     	pipes.pop();
-
-    }
-
-
-	
+    }	
 }
 
 
@@ -121,8 +113,6 @@ function startGame() {
     // todo: refactor pipe into an array!
     addPipe();
 
-
-    
     // Send the draw function to be called by setInterval every 50 milliseconds
     interval = setInterval(draw, 50);
     // pipeInterval = setInterval(function() {
@@ -138,6 +128,7 @@ function startGame() {
     });
 }
 
+
 // Draws something on screen
 function drawcomponent(component) {
     ctx.beginPath();
@@ -151,13 +142,12 @@ function drawcomponent(component) {
 // Detect collisions
 function collisionDetection() {
     
+    //--------I decided not to restart game if bird touches the ground to make the game easier--------
     // Did our bird hit the bottom of the screen?
-    if (bird.y + bird.height === canvas.height){
-        
+    //if (bird.y + bird.height === canvas.height){
         // Start a new game
-        
         //startGame();
-    }
+    //}
 
     var collided = false;
 
