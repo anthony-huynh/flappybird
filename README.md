@@ -24,10 +24,10 @@ Functions:
 - ~~Use space bar to move up~~
 - ~~collision detection~~
 - ~~make pipes (array of pipes)~~
-- ~~put bird drawing in ~~
+- ~~put bird drawing in~~
 - ~~put pipe drawings in~~
-- create "death" (game over) upon bird-pipe collision
-- give user a restart option 
+- ~~create "death" (game over) upon bird-pipe collision~~
+- give user a restart option
 
 
 NOTES:
