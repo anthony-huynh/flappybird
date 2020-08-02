@@ -36,7 +36,9 @@ function rand(lo, hi) {
     return Math.floor(Math.random() * (hi - lo)) + lo;
 }
 
-
+function stop() {
+    clearInterval(interval);
+}
 
 
  
@@ -163,18 +165,13 @@ function collisionDetection() {
         if (collided){
             bird.color = "red";
             //restart game?
-            gameOver();
+            stop();
 		}
 		else{
 			bird.color = "blue"
 		}
 }
 
-function gameOver(){
-    //clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-}
 
 setInterval(function() {
     addPipe();    
