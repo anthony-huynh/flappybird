@@ -163,11 +163,17 @@ function collisionDetection() {
         if (collided){
             bird.color = "red";
             //restart game?
-            startGame();
+            gameOver();
 		}
 		else{
 			bird.color = "blue"
 		}
+}
+
+function gameOver(){
+    //clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 }
 
 setInterval(function() {
