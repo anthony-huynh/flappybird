@@ -1,7 +1,5 @@
 #Flappy Bird
 
-Group Members:
-
 Objects:
 - Pipes
 - Bird
@@ -26,9 +24,14 @@ Functions:
 - ~~Use space bar to move up~~
 - ~~collision detection~~
 - ~~make pipes (array of pipes)~~
-
-
 - ~~put bird drawing in ~~
 - ~~put pipe drawings in~~
-- put background
-- make death and restart option (?)
+- create "death" (game over) upon bird-pipe collision
+- give user a restart option 
+
+
+NOTES:
+- the bird animation consists of two pngs which are constantly being switched to and from—where 0.png has the wings up, and 1.png's wings are down—in order
+  to create a flapping animation
+  
+ 
