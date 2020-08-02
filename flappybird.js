@@ -161,7 +161,9 @@ function collisionDetection() {
 		}
 	}
         if (collided){
-			bird.color = "red";
+            bird.color = "red";
+            //restart game?
+            startGame();
 		}
 		else{
 			bird.color = "blue"
